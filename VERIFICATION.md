@@ -2,7 +2,7 @@
 
 ## Automated
 
-`npm test` passes 23 of 23 tests (Node test runner, Node 20). The tests cover:
+`npm test` passes 24 of 24 tests (Node test runner, Node 20). The tests cover:
 
 - **Numerics:** normal-CDF accuracy at reference quantiles and in both tails (finite beyond z = −40), erfc reference values, and the golden-section and Nelder–Mead optimizers.
 - **Parsing:** quoted, semicolon-delimited ChEMBL exports with quoted relations; column mapping; relation and unit normalization; a readable error when required columns are missing.

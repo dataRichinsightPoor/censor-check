@@ -23,3 +23,9 @@ test('truncated-normal formula tracks per-paper shifts', () => {
   let q = 0, x = 0, y = 0; for (let i = 0; i < a.length; i++) { q += (a[i] - ma) * (b[i] - mb); x += (a[i] - ma) ** 2; y += (b[i] - mb) ** 2; }
   assert.ok(q / Math.sqrt(x * y) > 0.9);
 });
+test('engine reports the truncation prediction for the bundled data', () => {
+  const G = M.groupedEstimates(set);
+  assert.ok(Math.abs(G.predictedMedian - 0.255) < 0.005); assert.ok(Math.abs(G.predictedCorr - 0.918) < 0.005);
+  assert.ok(Math.abs(G.censoredFracMedian - 0.154) < 0.002);
+  assert.ok(Math.abs(M.truncationShift(0.1, 1) - 0.195) < 0.001); assert.ok(Math.abs(M.truncationShift(1 / 3, 1) - 0.5454) < 0.001);
+});

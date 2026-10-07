@@ -72,6 +72,16 @@ The tool reports:
 
 The per-set overstatement is non-negative by construction. Its magnitude is informative; its sign is not.
 
+### Bias from the censored fraction
+
+If a set's censored compounds are the weakest fraction \(c=|C_g|/(|E_g|+|C_g|)\) of a normal series with spread \(\sigma_w\), the exact values are a sample truncated at \(z_c=\Phi^{-1}(c)\), and their mean exceeds the series mean by
+
+\[
+\Delta(c)=\sigma_w\,\frac{\varphi(z_c)}{1-c}.
+\]
+
+The tool reports the median of \(\Delta(c_g)\) over the same sets as the fitted overstatement, and the Pearson correlation between the two. The formula approximates the same model, so agreement is partly built in. Its use is portability: with \(\hat\sigma_w\) and each set's censored fraction, the bias of an exact-only summary can be estimated without refitting. For example, \(\Delta(0.10)\approx0.19\,\sigma_w\) and \(\Delta(1/3)\approx0.55\,\sigma_w\).
+
 When between-set variance dominates, a pooled single-distribution model is misspecified. Its \(\hat\sigma\) mixes chemistry with paper, and its \(\hat\mu\) depends on how many records each paper contributes.
 
 ## Pooled versus within-paper comparison

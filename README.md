@@ -45,7 +45,7 @@ The bundled example covers 31,236 journal-literature IC50 records from ChEMBL fo
 - `web/model.js`: the engine. Pure functions, no dependencies.
 - `web/MATH.md` and `web/methods.html`: the mathematical contract. `tools-build-methods.py` builds the HTML from the Markdown.
 - `web/data/`: the bundled ChEMBL subset and its license and provenance note.
-- `tests/model.test.js` (20 tests) and `tests/depth.test.js` (3 tests). They cover:
+- `tests/model.test.js` (20 tests) and `tests/depth.test.js` (4 tests). They cover:
   - normal-CDF accuracy in both tails and the optimizers;
   - parsing of ChEMBL exports, and relation and unit normalization;
   - filter accounting;
@@ -55,7 +55,7 @@ The bundled example covers 31,236 journal-literature IC50 records from ChEMBL fo
   - counter-screen roles and the disguised-ceiling test;
   - compound collapse, CSV labeling and version consistency;
   - a regression test that reproduces every primary number published in the companion article from the bundled data;
-  - the threshold gradient, the selection and weighting decomposition, and the truncated-normal prediction of per-paper bias.
+  - the threshold gradient, the selection and weighting decomposition, and the truncated-normal prediction of per-paper bias, which the interface also reports.
 
 Run the tests with Node 20 or later:
 

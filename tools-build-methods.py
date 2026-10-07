@@ -16,10 +16,12 @@ while i<len(src):
         while not src[i].startswith('\\]'): blk.append(src[i]); i+=1
         blk.append(src[i]); out.append('<div class="math">'+html.escape('\n'.join(blk),quote=False)+'</div>')
     elif l.startswith('# '): flush(); out.append('<h1>'+inline(l[2:])+'</h1>')
-    elif l.startswith('## '):
+    elif l.startswith('### ') or l.startswith('## '):
         flush()
         if inlist: out.append('</ul>'); inlist=False
-        out.append('<h2>'+inline(l[3:])+'</h2>')
+        lvl = 3 if l.startswith('### ') else 2; t = l[lvl+1:]
+        slug = re.sub(r'[^a-z0-9]+','-',t.lower()).strip('-')
+        out.append(f'<h{lvl} id="{slug}">'+inline(t)+f'</h{lvl}>')
     elif re.match(r'^(- |\d+\. )',l):
         flush()
         if not inlist: out.append('<ul>'); inlist=True

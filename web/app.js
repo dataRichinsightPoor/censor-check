@@ -85,7 +85,7 @@ function render() {
     [w.reachableGroupsPct < 60 ? 'flag' : 'ok', 'Not every paper could see weakness', `Only ${f1(w.reachableGroupsPct)}% of paper sets report any value or bound at or above the threshold. Among those, weak share is ${f1(w.reachableWeakAllPct)}% → ${f1(w.reachableWeakKeptPct)}%.`],
   ].map(([c, h, t]) => `<article class="${c}"><h3>${h}</h3><p>${t}</p></article>`).join('') : '';
   drawShifts();
-  $('shift-note').textContent = g ? `${int(g.shiftGroups)} paper sets with at least one bound and ≥ ${$('minShift').value} exact values. Median ${f2(g.shiftMedian)}, interquartile range ${f2(g.shiftQ1)} to ${f2(g.shiftQ3)}. Every shift is positive by construction: a bound can only pull a group mean down. The magnitude, not the sign, is the finding. The rightmost bar includes all larger shifts.` : '';
+  $('shift-note').textContent = g ? `${int(g.shiftGroups)} paper sets with at least one bound and ≥ ${$('minShift').value} exact values. Median ${f2(g.shiftMedian)}, interquartile range ${f2(g.shiftQ1)} to ${f2(g.shiftQ3)}. Every shift is positive by construction: a bound can only pull a group mean down. The magnitude, not the sign, is the finding. The rightmost bar includes all larger shifts. From censored fractions alone (median ${f2(g.censoredFracMedian)}), the truncated-normal formula predicts a median of ${f2(g.predictedMedian)}; prediction and fit correlate at r = ${f2(g.predictedCorr)}.` : '';
   $('estimates').innerHTML = [
     ['Exact values only, mean', f2(p.dropMean), 'What a filtered dataset reports.'],
     ['Bounds substituted as values, mean', f2(p.substituteMean), 'Treats "> 10 µM" as "= 10 µM". Still biased toward potency.'],

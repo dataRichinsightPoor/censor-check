@@ -5,7 +5,7 @@
 <h1>The censored record,<br>with its assumptions showing.</h1>
 <p>Data-Rich, Insight-Poor · 99 Small Problems · No. 06 · v0.1.0-alpha Companion to The Audit, No. 1, "Where the Inactives Went."</p>
 <p>The question is narrow. A potency table records some compounds as exact IC50 values and others as bounds. What does a filter that keeps only exact values remove? How large is the resulting bias? And does a comparison made by pooling many papers survive inside the papers that measured both arms? This contract states what the tool computes, which assumptions produce each number, and where the numbers stop meaning anything.</p>
-<h2>Records and the filter</h2>
+<h2 id="records-and-the-filter">Records and the filter</h2>
 <p>Each record \(i\) carries a relation \(r_i\), a concentration \(v_i\) converted to nM, a group \(g_i\) (the paper), a stratum \(s_i\) (usually the target), an optional compound identifier, and a validity flag. Relations are normalized to four classes:</p>
 <ul>
 <li>exact: "=";</li>
@@ -19,7 +19,7 @@
 p_i = 9-\log_{10} v_i ,
 \]</div>
 <p>so a bound "\(\mathrm{IC50}&gt;c\) nM" becomes "\(p_i&lt;p_c\)", with \(p_c=9-\log_{10}c\).</p>
-<h2>Weak tail</h2>
+<h2 id="weak-tail">Weak tail</h2>
 <p>For a threshold \(T\) (default 10,000 nM, \(p_T=5\)), a record is weak if \(v_i\ge T\), whether \(v_i\) is an exact value or a bound. A bound below \(T\) cannot say whether a compound is weak and is counted as not weak, which makes every loss estimate conservative.</p>
 <ul>
 <li>Record-weighted weak share, all evidence: \(W_{\mathrm{all}}=|\{i\in\mathcal{A}:v_i\ge T\}|/|\mathcal{A}|\).</li>
@@ -29,7 +29,7 @@ p_i = 9-\log_{10} v_i ,
 <li>Reachable shares: restricted to paper–stratum sets whose largest reported value or bound is at least \(T\). The largest reported value is a lower bound on the top tested concentration, so a set that never reports anything at or above \(T\) could not have recorded weakness at \(T\).</li>
 <li>Tail lost: sets with at least one weak bound and no weak exact value. After filtering, such a set appears to contain only active compounds.</li>
 </ul>
-<h2>Pooled censored normal</h2>
+<h2 id="pooled-censored-normal">Pooled censored normal</h2>
 <p>Assume all potencies in \(\mathcal{A}\) are draws from \(N(\mu,\sigma^2)\). Exact values contribute their density and bounds contribute the probability of lying below them:</p>
 <div class="math">\[
 \ell(\mu,\sigma)=\sum_{i\in E}\left[-\log\sigma-\tfrac12\log 2\pi-\frac{(p_i-\mu)^2}{2\sigma^2}\right]+\sum_{j\in C}\log\Phi\!\left(\frac{p_{c_j}-\mu}{\sigma}\right).
@@ -42,7 +42,7 @@ p_i = 9-\log_{10} v_i ,
 </ul>
 <p>It also reports the overstatement \(\bar p_E-\hat\mu\) in log units and as a fold change \(10^{\bar p_E-\hat\mu}\), and the predicted weak share \(\Phi((p_T-\hat\mu)/\hat\sigma)\).</p>
 <p>Because each \(\log\Phi\) term is decreasing in \(\mu\), adding bounds can only move \(\hat\mu\) toward weaker potency. Substitution sits between the other two estimates. It treats each bound as the weakest value consistent with it, so it still overstates potency.</p>
-<h2>Grouped censored normal</h2>
+<h2 id="grouped-censored-normal">Grouped censored normal</h2>
 <p>Medicinal-chemistry papers are not exchangeable draws from one distribution. Each reports a congeneric series designed around a scaffold, a hypothesis and an assay. The grouped model gives each paper–stratum set \(g\) its own mean and makes all sets share one within-set spread:</p>
 <div class="math">\[
 p_i\sim N(\mu_{g_i},\sigma_w^2),\qquad \ell=\sum_g\left[\sum_{i\in E_g}\log\tfrac{1}{\sigma_w}\varphi\!\left(\tfrac{p_i-\mu_g}{\sigma_w}\right)+\sum_{j\in C_g}\log\Phi\!\left(\tfrac{p_{c_j}-\mu_g}{\sigma_w}\right)\right].
@@ -56,8 +56,14 @@ p_i\sim N(\mu_{g_i},\sigma_w^2),\qquad \ell=\sum_g\left[\sum_{i\in E_g}\log\tfra
 <li>for sets with at least one bound and at least \(m\) exact values, the per-set overstatement \(\bar p_{E_g}-\hat\mu_g\), as a median and interquartile range.</li>
 </ul>
 <p>The per-set overstatement is non-negative by construction. Its magnitude is informative; its sign is not.</p>
+<h3 id="bias-from-the-censored-fraction">Bias from the censored fraction</h3>
+<p>If a set's censored compounds are the weakest fraction \(c=|C_g|/(|E_g|+|C_g|)\) of a normal series with spread \(\sigma_w\), the exact values are a sample truncated at \(z_c=\Phi^{-1}(c)\), and their mean exceeds the series mean by</p>
+<div class="math">\[
+\Delta(c)=\sigma_w\,\frac{\varphi(z_c)}{1-c}.
+\]</div>
+<p>The tool reports the median of \(\Delta(c_g)\) over the same sets as the fitted overstatement, and the Pearson correlation between the two. The formula approximates the same model, so agreement is partly built in. Its use is portability: with \(\hat\sigma_w\) and each set's censored fraction, the bias of an exact-only summary can be estimated without refitting. For example, \(\Delta(0.10)\approx0.19\,\sigma_w\) and \(\Delta(1/3)\approx0.55\,\sigma_w\).</p>
 <p>When between-set variance dominates, a pooled single-distribution model is misspecified. Its \(\hat\sigma\) mixes chemistry with paper, and its \(\hat\mu\) depends on how many records each paper contributes.</p>
-<h2>Pooled versus within-paper comparison</h2>
+<h2 id="pooled-versus-within-paper-comparison">Pooled versus within-paper comparison</h2>
 <p>For strata \(A\) and \(B\), let \(w_{A}\) and \(w_{B}\) be weak shares. The tool reports three differences:</p>
 <ul>
 <li>pooled: \(w_A-w_B\) over every record;</li>
@@ -69,9 +75,9 @@ p_i\sim N(\mu_{g_i},\sigma_w^2),\qquad \ell=\sum_g\left[\sum_{i\in E_g}\log\tfra
 \]</div>
 <p>A reversal is flagged when the within-paper difference has the opposite sign to the pooled difference and is at least one percentage point in magnitude. The same contrast is computed for the mean exact-value pIC50: the pooled difference, and the median of per-paper differences over papers with exact values in both strata.</p>
 <p>The two differences estimate different quantities. The pooled difference describes the literature's composition: which series were published for each target, at what scale, and with which top concentrations. The within-paper difference holds the series fixed. In a selectivity panel, though, the off-target is weak by design, so the within-paper difference measures intended selectivity rather than the intrinsic difficulty of either target. Neither difference is a property of the targets alone.</p>
-<h2>Counter-screens</h2>
+<h2 id="counter-screens">Counter-screens</h2>
 <p>In papers that measured two or more strata, the stratum with the highest median pIC50 (bounds taken at face value) is labeled primary, and the others are labeled counter-screens. The tool reports the censored share of records in each role and in single-stratum papers. The label is operational. It does not read the paper's stated intent.</p>
-<h2>Disguised ceilings</h2>
+<h2 id="disguised-ceilings">Disguised ceilings</h2>
 <p>If a paper recorded "inactive at the top concentration" as an exact value equal to that concentration, several compounds would share its highest exact value. For paper–stratum sets with at least 8 exact values, the tool reports:</p>
 <ul>
 <li>the share of sets in which the highest exact value is tied by at least 3 records;</li>
@@ -79,11 +85,11 @@ p_i\sim N(\mu_{g_i},\sigma_w^2),\qquad \ell=\sum_g\left[\sum_{i\in E_g}\log\tfra
 <li>the number of sets in which the highest exact value also appears as a bound.</li>
 </ul>
 <p>A top-tie rate well above the interior rate is the signature of disguised censoring.</p>
-<h2>Compound level</h2>
+<h2 id="compound-level">Compound level</h2>
 <p>Records are collapsed to compound–stratum pairs. The tool reports pairs known only through bounds, which vanish entirely under the filter, and pairs with both exact and censored records. Records are not deduplicated in any other calculation.</p>
-<h2>Numerics</h2>
+<h2 id="numerics">Numerics</h2>
 <p>\(\log\Phi\) is computed from a log-space Chebyshev approximation to erfc, with fractional error below \(1.2\times10^{-7}\). It is finite beyond \(z=-40\). All calculations run in the browser. Uploaded files are not transmitted.</p>
-<h2>Boundaries</h2>
+<h2 id="boundaries">Boundaries</h2>
 <ul>
 <li>The tool reads relations and values. It cannot inspect curves, so it cannot tell whether an exact value was truly bracketed.</li>
 <li>Censoring points are assumed known and independent of potency given the paper. In practice, top concentrations are chosen by laboratories, often because of solubility, aggregation or cytotoxicity limits. That makes censoring informative about the chemistry.</li>
@@ -92,7 +98,7 @@ p_i\sim N(\mu_{g_i},\sigma_w^2),\qquad \ell=\sum_g\left[\sum_{i\in E_g}\log\tfra
 <li>Estimates describe a dataset. They are not corrected potencies for any compound.</li>
 <li>Software verification is not biological validation.</li>
 </ul>
-<h2>References</h2>
+<h2 id="references">References</h2>
 <ul>
 <li>Tobin J. Estimation of relationships for limited dependent variables. Econometrica. 1958;26(1):24–36. <a href="https://doi.org/10.2307/1907382">https://doi.org/10.2307/1907382</a></li>
 <li>Mantel N, Haenszel W. Statistical aspects of the analysis of data from retrospective studies of disease. Journal of the National Cancer Institute. 1959;22(4):719–748. <a href="https://doi.org/10.1093/jnci/22.4.719">https://doi.org/10.1093/jnci/22.4.719</a></li>

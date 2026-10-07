@@ -31,6 +31,10 @@ export function logPhi(z) {
 }
 
 export function Phi(z) { return Math.exp(logPhi(z)); }
+// Inverse normal CDF by bisection (adequate for 0 < q < 1 at the precision used here).
+export function invPhi(q) { let lo = -9, hi = 9; for (let i = 0; i < 80; i++) { const m = (lo + hi) / 2; if (Phi(m) < q) lo = m; else hi = m; } return (lo + hi) / 2; }
+// Truncated-normal approximation to the exact-only overstatement for a series whose weakest fraction c is censored.
+export function truncationShift(c, sigmaW) { if (!(c > 0 && c < 1)) return 0; const z = invPhi(c); return sigmaW * Math.exp(-z * z / 2) / Math.sqrt(2 * Math.PI) / (1 - c); }
 
 export function logNormPdf(x, mu, sigma) {
   const z = (x - mu) / sigma;
@@ -293,14 +297,19 @@ export function groupedEstimates(set, { minExactForShift = 5, iterations = 30 } 
   const W = groups.reduce((a, g) => a + g.n, 0);
   const muBar = groups.reduce((a, g) => a + g.n * g.mu, 0) / W;
   const between = Math.sqrt(groups.reduce((a, g) => a + g.n * (g.mu - muBar) ** 2, 0) / W);
-  const shifts = groups.filter(g => g.c.length > 0 && g.e.length >= minExactForShift).map(g => g.dropMean - g.mu);
+  const shiftSets = groups.filter(g => g.c.length > 0 && g.e.length >= minExactForShift);
+  const shifts = shiftSets.map(g => g.dropMean - g.mu);
+  const predicted = shiftSets.map(g => truncationShift(g.c.length / g.n, s));
+  const corr = (a, b) => { if (a.length < 3) return NaN; const ma = mean(a), mb = mean(b); let q = 0, x = 0, y = 0; for (let i = 0; i < a.length; i++) { q += (a[i] - ma) * (b[i] - mb); x += (a[i] - ma) ** 2; y += (b[i] - mb) ** 2; } return q / Math.sqrt(x * y); };
   const pooledSD = sd(groups.flatMap(g => g.e));
   return {
     groups: groups.length, withinSD: s, betweenSD: between, pooledExactSD: pooledSD,
     groupShare: between * between / (between * between + s * s),
     shiftGroups: shifts.length, shiftMedian: median(shifts), shiftQ1: quantile(shifts, 0.25), shiftQ3: quantile(shifts, 0.75),
     shiftPositivePct: shifts.length ? 100 * shifts.filter(x => x > 0).length / shifts.length : NaN,
-    shifts,
+    shifts, predicted,
+    censoredFracMedian: shiftSets.length ? median(shiftSets.map(g => g.c.length / g.n)) : NaN,
+    predictedMedian: predicted.length ? median(predicted) : NaN, predictedCorr: corr(predicted, shifts),
   };
 }
 
