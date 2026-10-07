@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use this software, cite its version and state the threshold, grouping and filter you applied. Numerical verification is not biological validation."
+title: "Censor Check"
+type: software
+version: 0.1.0-alpha
+license: MIT
+repository-code: "https://github.com/dataRichinsightPoor/censor-check"
+url: "https://datarichinsightpoor.github.io/censor-check/"
+authors:
+  - name: "Data-Rich, Insight-Poor"
+abstract: "A research-use audit of censored potency data. It reports what an exact-value (pChEMBL-style) filter removes from an IC50 table, estimates the resulting potency bias with pooled and grouped censored-normal likelihoods, separates record-weighted, paper-weighted and threshold-reachable summaries, compares strata pooled and within papers with Mantel-Haenszel weighting, checks counter-screen censoring and disguised ceilings, and reproduces the companion article's numbers from a bundled ChEMBL subset. Estimates describe datasets, not compound potencies."

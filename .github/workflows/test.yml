@@ -1,0 +1,33 @@
+name: Numerical validation
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  numerical-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.0.0
+        with:
+          node-version: '22'
+      - name: Run numerical tests
+        run: npm test
+      - name: Check the served version matches the package version
+        run: |
+          node -e "
+          const fs=require('fs');
+          const pkg=JSON.parse(fs.readFileSync('package.json','utf8')).version;
+          const src=fs.readFileSync('web/model.js','utf8');
+          const m=src.match(/VERSION\s*=\s*'([^']+)'/);
+          if(!m) throw new Error('No VERSION found in web/model.js');
+          if(m[1]!==pkg) throw new Error('Version mismatch: package.json '+pkg+' vs web/model.js '+m[1]);
+          for(const f of ['web/index.html','web/methods.html']){
+            if(!fs.readFileSync(f,'utf8').includes(pkg)) throw new Error('Version badge missing in '+f);
+          }
+          console.log('Version consistent:',pkg);
+          "

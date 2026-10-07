@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Censor Check · No. 07 · Data-Rich, Insight-Poor · The Audit, No. 1</title>
+<meta name="description" content="Does your potency dataset keep its greater-than signs? A censoring and aggregation audit for IC50 tables, with explicit mathematics and a bundled ChEMBL example.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Cpath d=%22M18 6v20%22 stroke=%22%237dd5c8%22 stroke-width=%223%22/%3E%3C/svg%3E"><link rel="stylesheet" href="style.css"><script type="module" src="app.js"></script>
+</head>
+<body>
+<a class="skip" href="#workbench">Skip to model</a>
+<header>
+<a class="brand" href="index.html"><svg viewBox="0 0 32 32" width="32" height="32" aria-label="Censor mark" role="img"><path d="M4 24h14" stroke="currentColor" stroke-width="1.6"/><path d="M18 9v15" stroke="currentColor" stroke-width="2.2"/><path d="M21 14l7 4-7 4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span>DATA-RICH, INSIGHT-POOR<small>EXECUTABLE BIOLOGY</small></span></a>
+<nav aria-label="Resources"><a href="methods.html">The math</a><a href="model.js" download>Model code ↓</a><button id="theme">Light mode</button></nav>
+</header>
+<main>
+<section class="intro">
+<div><p class="eyebrow">99 SMALL PROBLEMS <span>/</span> NO. 07</p><h1>Censor Check</h1><p class="question">A greater-than sign is a measurement.<br>Does your dataset keep it?</p><p class="tagline">Useful models for assumptions with expensive ambitions.</p></div>
+<aside><span class="badge">RESEARCH-USE ALPHA · v0.1.0-alpha</span><h2>Filtering on exact values removes the compounds that failed.<br>Pooling papers hides where they went.</h2><p>Load an IC50 table. See what an exact-value filter removes, how the weak tail changes, what a censored likelihood estimates instead, and whether a pooled comparison survives inside the papers that measured both arms.</p><p class="small">Companion to The Audit, No. 1, "Where the Inactives Went." The bundled example is a ChEMBL subset (CC BY-SA 3.0). Not a potency estimate for any compound.</p><a href="#aggregation">Pooled or within-paper? ↓</a><br><a href="#compare">Compare two targets ↓</a><br><a href="#ties">Are ceilings disguised as values? ↓</a></aside>
+</section>
+<section class="toolbar" aria-label="Data source"><label for="source">Data</label><select id="source"><option value="bundled">Bundled: six targets, journal IC50s from ChEMBL (31,236 records)</option><option value="file">My file (CSV or ChEMBL export)</option></select><button id="load">Load</button></section>
+<div class="workspace" id="workbench">
+<form id="controls" novalidate>
+<fieldset><legend>01 / The table</legend>
+<label class="file-button" id="file-label" hidden>Choose file<input id="file" type="file" accept=".csv,.tsv,.txt,text/csv"></label>
+<p class="hint" id="file-hint">Columns are matched by name. Required: relation and value. Optional: units, document or group, molecule or compound, target or stratum, data validity comment. ChEMBL web exports (semicolon-separated) are read directly. Your file stays in your browser.</p>
+<p class="hint" id="columns"></p>
+</fieldset>
+<fieldset><legend>02 / The question</legend>
+<label for="threshold">Weakness threshold <span>nM</span></label><input id="threshold" type="number" min="0" step="any" value="10000">
+<p class="hint">A record is weak if its exact value or its lower bound is at or above this concentration. Bounds below the threshold are counted as uninformative, which makes every loss estimate conservative.</p>
+<div class="pair"><div><label for="minGroup">Min records <span>/ paper</span></label><input id="minGroup" type="number" min="1" step="1" value="5"></div><div><label for="minShift">Min exact <span>for shift</span></label><input id="minShift" type="number" min="1" step="1" value="5"></div></div>
+</fieldset>
+<button class="primary" id="run" type="submit">Run the check</button>
+<p id="status" role="status" aria-live="polite"></p>
+<div class="exports"><button type="button" id="csv" disabled>Summary CSV</button><button type="button" id="json" disabled>Results JSON</button><button type="button" id="png" disabled>Figure PNG</button></div>
+<p id="export-status" class="hint" aria-live="polite"></p>
+</form>
+<div class="results" id="results">
+<div class="result-heading"><h2 id="headline">Load a table to begin.</h2><span class="badge" id="badge"></span></div>
+<div class="metrics four" id="metrics"></div>
+<div class="plot-panel"><div class="plot-heading"><h3>Share of records weaker than the threshold, all evidence versus the exact-value filter</h3><span class="badge" id="bars-badge">BY STRATUM</span></div><div class="legend"><span class="protein">■ All evidence (exact + bounds)</span><span class="rna">■ After exact-value filter</span></div><canvas id="bars" role="img" aria-label="Weak share by stratum before and after filtering"></canvas>
+<label for="reach" style="margin-top:14px"><input id="reach" type="checkbox" style="width:auto;margin-right:8px">Only papers whose reported values reach the threshold</label></div>
+<div class="table-wrap" tabindex="0"><table><caption>Filter accounting. The exact-value rule mirrors pChEMBL: relation "=", units convertible to nM, value above zero, validity empty or manually validated.</caption><thead><tr><th>Quantity</th><th class="num">Value</th><th>Meaning</th></tr></thead><tbody id="accounting"></tbody></table></div>
+</div>
+</div>
+
+<section class="section" id="aggregation"><p class="eyebrow">POOLED OR WITHIN-PAPER?</p><h2>Most of the spread belongs to the paper, not the compound.</h2>
+<p class="lead">A pooled censored model treats every record as a draw from one distribution. Medicinal-chemistry papers are not draws from one distribution: each reports a congeneric series built around one scaffold and one hypothesis. The grouped model gives every paper its own mean and asks the papers to share only a within-paper spread. The shift is how far each paper's exact-only mean overstates its censored estimate.</p>
+<div class="verdicts" id="agg-cards"></div>
+<div class="plot-panel"><div class="plot-heading"><h3>Per-paper overstatement of mean potency when bounds are dropped</h3><span class="badge">LOG UNITS · PAPERS WITH BOUNDS</span></div><canvas id="shifts" role="img" aria-label="Distribution of per-paper potency shifts"></canvas><p class="hint" id="shift-note"></p></div>
+<div class="table-wrap" tabindex="0"><table><caption>Pooled and grouped estimates in pIC50 units.</caption><thead><tr><th>Estimate</th><th class="num">Value</th><th>Meaning</th></tr></thead><tbody id="estimates"></tbody></table></div>
+<div class="plot-panel" style="margin-top:22px"><div class="plot-heading"><h3>Where the bounds sit relative to the threshold</h3><span class="badge">CENSORED RECORDS</span></div><canvas id="boundsbar" role="img" aria-label="Share of bounds below, at and above threshold"></canvas><p class="hint">A bound below the threshold cannot say whether a compound is weak. Its share is a direct measure of how much the comparison depends on top concentrations chosen by each laboratory.</p></div>
+</section>
+
+<section class="section" id="compare"><p class="eyebrow">COMPARE TWO STRATA</p><h2>A pooled difference answers a question about which papers exist.</h2>
+<p class="lead">Pick two targets (or any stratum column). The pooled difference compares everything ever reported for each. The within-paper difference compares them only inside papers that measured both, weighted as in a Mantel–Haenszel estimate. When the two disagree in sign, the pooled number is describing the literature's composition.</p>
+<div class="compare-form"><div><label for="cmpA">Stratum A</label><select id="cmpA"></select></div><div><label for="cmpB">Stratum B</label><select id="cmpB"></select></div><div><label for="cmpUse">Records</label><select id="cmpUse"><option value="all">All evidence</option><option value="filtered">Exact-value filter</option></select></div><div><button type="button" id="cmpRun">Compare</button></div></div>
+<div class="plot-panel"><canvas id="cmp" role="img" aria-label="Pooled versus within-paper difference"></canvas><p class="hint" id="cmp-note"></p></div>
+<div class="verdicts" id="counter-cards"></div>
+</section>
+
+<section class="section" id="ties"><p class="eyebrow">DISGUISED CEILINGS</p><h2>If bounds were written as values, the top of each paper would tie.</h2>
+<p class="lead">When a paper records "inactive at 10 µM" as "IC50 = 10 µM," several compounds share its highest exact value. The check compares how often a paper's top exact value is tied by at least three compounds with how often an interior value is, as an exact expectation over a randomly chosen interior record.</p>
+<div class="verdicts" id="tie-cards"></div>
+</section>
+
+<section class="section"><p class="eyebrow">BOUNDARIES</p><h2>What the check does not do.</h2>
+<div class="boundary"><strong>Scope.</strong> It reads relations and values; it does not read dose-response curves, so it cannot tell whether an exact value was truly bracketed. The censored models assume normal potencies within a group and an independent, known bound for each censored record. They are estimates of direction and scale for a dataset, not corrected potencies for any compound. The primary and counter-screen labels are operational: the stratum with the highest median pIC50 in a paper is called primary. Software verification is not biological validation.</div>
+</section>
+</main>
+<footer><span>Censor Check v0.1.0-alpha · MIT · Data-Rich, Insight-Poor</span><span>Bundled data: ChEMBL, EMBL-EBI, CC BY-SA 3.0. See data/README.md.</span></footer>
+</body>
+</html>
