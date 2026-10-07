@@ -5,7 +5,9 @@
   "weakKept": 8.413922859830668,
   "abl_akt_pooled": 4.457546969581203,
   "abl_akt_within": -19.702602230483272,
+  "akt_vegf_pooled": 3.606723083167862,
   "akt_vegf_within": 30.131979748621408,
+  "abl_vegf_pooled": 8.064270052749064,
   "abl_vegf_within": -1.685702957697716,
   "counterMinusPrimary": 16.26988041800847
  },
@@ -30,9 +32,17 @@
    -32.33,
    -8.79
   ],
+  "akt_vegf_pooled": [
+   -1.4,
+   8.79
+  ],
   "akt_vegf_within": [
    18.23,
    39.35
+  ],
+  "abl_vegf_pooled": [
+   1.48,
+   17.53
   ],
   "abl_vegf_within": [
    -8.97,

@@ -23,7 +23,7 @@ const ci = a => [q(a, 0.025), q(a, 0.975)].map(x => +x.toFixed(2));
 const G = M.groupedEstimates(set);
 const stat = s => {
   const w = M.weakTail(s, T); const c1 = M.compareStrata(s, 'ABL1', 'AKT1'); const c2 = M.compareStrata(s, 'AKT1', 'VEGFR2'); const c3 = M.compareStrata(s, 'ABL1', 'VEGFR2'); const cs = M.counterScreens(s);
-  return { weakCens: w.weakCensoredPct, weakAll: w.weakAllPct, weakKept: w.weakKeptPct, abl_akt_pooled: c1.pooledWeakDiff, abl_akt_within: c1.withinWeakDiff, akt_vegf_within: c2.withinWeakDiff, abl_vegf_within: c3.withinWeakDiff, counterMinusPrimary: cs.counterCensoredPct - cs.primaryCensoredPct };
+  return { weakCens: w.weakCensoredPct, weakAll: w.weakAllPct, weakKept: w.weakKeptPct, abl_akt_pooled: c1.pooledWeakDiff, abl_akt_within: c1.withinWeakDiff, akt_vegf_pooled: c2.pooledWeakDiff, akt_vegf_within: c2.withinWeakDiff, abl_vegf_pooled: c3.pooledWeakDiff, abl_vegf_within: c3.withinWeakDiff, counterMinusPrimary: cs.counterCensoredPct - cs.primaryCensoredPct };
 };
 const B = 400, boots = [];
 for (let b = 0; b < B; b++) boots.push(stat(resample()));
