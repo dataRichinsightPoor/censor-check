@@ -34,7 +34,7 @@ body='\n'.join(out).replace('<h1>Censor Check: mathematical contract</h1>','<h1>
 page=f'''<!doctype html><html lang="en" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Censor Check · Math, assumptions &amp; evidence · v0.1.0-alpha</title><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css">
 <script>window.MathJax={{tex:{{inlineMath:[['\\\\(','\\\\)']],displayMath:[['\\\\[','\\\\]']]}},svg:{{fontCache:'global'}}}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script></head><body>
 <header><a href="index.html">← Censor Check</a><nav aria-label="Resources"><a href="model.js" download>Download model code</a><a href="MATH.md">Math as Markdown</a></nav></header>
-<main class="methods"><span class="badge">DATA-RICH, INSIGHT-POOR · THE AUDIT, NO. 1 · 99 SMALL PROBLEMS · NO. 07 · v0.1.0-alpha</span>
+<main class="methods"><span class="badge">DATA-RICH, INSIGHT-POOR · THE AUDIT, NO. 1 · 99 SMALL PROBLEMS · NO. 06 · v0.1.0-alpha</span>
 {body}
 </main></body></html>'''
 open('web/methods.html','w').write(page); print('ok')

@@ -1,6 +1,6 @@
 # Censor Check: mathematical contract
 
-Data-Rich, Insight-Poor · 99 Small Problems · No. 07 · v0.1.0-alpha
+Data-Rich, Insight-Poor · 99 Small Problems · No. 06 · v0.1.0-alpha
 Companion to The Audit, No. 1, "Where the Inactives Went."
 
 The question is narrow. A potency table records some compounds as exact IC50 values and others as bounds. What does a filter that keeps only exact values remove? How large is the resulting bias? And does a comparison made by pooling many papers survive inside the papers that measured both arms? This contract states what the tool computes, which assumptions produce each number, and where the numbers stop meaning anything.

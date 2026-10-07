@@ -1,9 +1,9 @@
 <!doctype html><html lang="en" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Censor Check · Math, assumptions &amp; evidence · v0.1.0-alpha</title><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css">
 <script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},svg:{fontCache:'global'}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script></head><body>
 <header><a href="index.html">← Censor Check</a><nav aria-label="Resources"><a href="model.js" download>Download model code</a><a href="MATH.md">Math as Markdown</a></nav></header>
-<main class="methods"><span class="badge">DATA-RICH, INSIGHT-POOR · THE AUDIT, NO. 1 · 99 SMALL PROBLEMS · NO. 07 · v0.1.0-alpha</span>
+<main class="methods"><span class="badge">DATA-RICH, INSIGHT-POOR · THE AUDIT, NO. 1 · 99 SMALL PROBLEMS · NO. 06 · v0.1.0-alpha</span>
 <h1>The censored record,<br>with its assumptions showing.</h1>
-<p>Data-Rich, Insight-Poor · 99 Small Problems · No. 07 · v0.1.0-alpha Companion to The Audit, No. 1, "Where the Inactives Went."</p>
+<p>Data-Rich, Insight-Poor · 99 Small Problems · No. 06 · v0.1.0-alpha Companion to The Audit, No. 1, "Where the Inactives Went."</p>
 <p>The question is narrow. A potency table records some compounds as exact IC50 values and others as bounds. What does a filter that keeps only exact values remove? How large is the resulting bias? And does a comparison made by pooling many papers survive inside the papers that measured both arms? This contract states what the tool computes, which assumptions produce each number, and where the numbers stop meaning anything.</p>
 <h2>Records and the filter</h2>
 <p>Each record \(i\) carries a relation \(r_i\), a concentration \(v_i\) converted to nM, a group \(g_i\) (the paper), a stratum \(s_i\) (usually the target), an optional compound identifier, and a validity flag. Relations are normalized to four classes:</p>

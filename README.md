@@ -1,7 +1,7 @@
 # Censor Check
 
 99 Small Problems: Useful models for assumptions with expensive ambitions.  
-No. 07 | Data-Rich, Insight-Poor · The Audit, No. 1 | v0.1.0-alpha
+No. 06 | Data-Rich, Insight-Poor · The Audit, No. 1 | v0.1.0-alpha
 
 Companion article: Data-Rich, Insight-Poor · The Audit, No. 1, "Where the Inactives Went."
 

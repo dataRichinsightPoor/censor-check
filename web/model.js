@@ -1,5 +1,5 @@
 // Censor Check: engine. Pure functions, no dependencies.
-// Data-Rich, Insight-Poor · 99 Small Problems · No. 07
+// Data-Rich, Insight-Poor · 99 Small Problems · No. 06
 // MIT License. See LICENSE.
 
 export const VERSION = '0.1.0-alpha';

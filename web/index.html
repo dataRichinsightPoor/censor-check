@@ -2,7 +2,7 @@
 <html lang="en" data-theme="dark">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Censor Check · No. 07 · Data-Rich, Insight-Poor · The Audit, No. 1</title>
+<title>Censor Check · No. 06 · Data-Rich, Insight-Poor · The Audit, No. 1</title>
 <meta name="description" content="Does your potency dataset keep its greater-than signs? A censoring and aggregation audit for IC50 tables, with explicit mathematics and a bundled ChEMBL example.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif&display=swap" rel="stylesheet">
@@ -16,7 +16,7 @@
 </header>
 <main>
 <section class="intro">
-<div><p class="eyebrow">99 SMALL PROBLEMS <span>/</span> NO. 07</p><h1>Censor Check</h1><p class="question">A greater-than sign is a measurement.<br>Does your dataset keep it?</p><p class="tagline">Useful models for assumptions with expensive ambitions.</p></div>
+<div><p class="eyebrow">99 SMALL PROBLEMS <span>/</span> NO. 06</p><h1>Censor Check</h1><p class="question">A greater-than sign is a measurement.<br>Does your dataset keep it?</p><p class="tagline">Useful models for assumptions with expensive ambitions.</p></div>
 <aside><span class="badge">RESEARCH-USE ALPHA · v0.1.0-alpha</span><h2>Filtering on exact values removes the compounds that failed.<br>Pooling papers hides where they went.</h2><p>Load an IC50 table. See what an exact-value filter removes, how the weak tail changes, what a censored likelihood estimates instead, and whether a pooled comparison survives inside the papers that measured both arms.</p><p class="small">Companion to The Audit, No. 1, "Where the Inactives Went." The bundled example is a ChEMBL subset (CC BY-SA 3.0). Not a potency estimate for any compound.</p><a href="#aggregation">Pooled or within-paper? ↓</a><br><a href="#compare">Compare two targets ↓</a><br><a href="#ties">Are ceilings disguised as values? ↓</a></aside>
 </section>
 <section class="toolbar" aria-label="Data source"><label for="source">Data</label><select id="source"><option value="bundled">Bundled: six targets, journal IC50s from ChEMBL (31,236 records)</option><option value="file">My file (CSV or ChEMBL export)</option></select><button id="load">Load</button></section>
