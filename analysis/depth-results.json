@@ -1,0 +1,335 @@
+{
+ "point": {
+  "weakCens": 58.798599594619496,
+  "weakAll": 17.76664702416028,
+  "weakKept": 8.413922859830668,
+  "abl_akt_pooled": 4.457546969581203,
+  "abl_akt_within": -19.702602230483272,
+  "akt_vegf_within": 30.131979748621408,
+  "abl_vegf_within": -1.685702957697716,
+  "counterMinusPrimary": 16.26988041800847
+ },
+ "bootstrapCI": {
+  "weakCens": [
+   54.17,
+   63.37
+  ],
+  "weakAll": [
+   16.34,
+   19.42
+  ],
+  "weakKept": [
+   7.32,
+   9.54
+  ],
+  "abl_akt_pooled": [
+   -3.41,
+   14.9
+  ],
+  "abl_akt_within": [
+   -32.33,
+   -8.79
+  ],
+  "akt_vegf_within": [
+   18.23,
+   39.35
+  ],
+  "abl_vegf_within": [
+   -8.97,
+   13.89
+  ],
+  "counterMinusPrimary": [
+   10.31,
+   27.06
+  ]
+ },
+ "shiftMedian": {
+  "point": 0.304,
+  "ci": [
+   0.26,
+   0.33
+  ],
+  "n": 486
+ },
+ "reversalBootstrapSameSignPct": 87.25,
+ "threshold": [
+  {
+   "uM": 1,
+   "weakAll": 37.2,
+   "weakKept": 28.3,
+   "weakCens": 33.8,
+   "reachable": 68.4
+  },
+  {
+   "uM": 3,
+   "weakAll": 26.7,
+   "weakKept": 17.8,
+   "weakCens": 42,
+   "reachable": 56
+  },
+  {
+   "uM": 10,
+   "weakAll": 17.8,
+   "weakKept": 8.4,
+   "weakCens": 58.8,
+   "reachable": 44.4
+  },
+  {
+   "uM": 30,
+   "weakAll": 7.5,
+   "weakKept": 3.4,
+   "weakCens": 60.3,
+   "reachable": 22
+  },
+  {
+   "uM": 100,
+   "weakAll": 3.1,
+   "weakKept": 0.6,
+   "weakCens": 82.6,
+   "reachable": 9.4
+  }
+ ],
+ "era": [
+  {
+   "era": "1976-1999",
+   "n": 735,
+   "boundPct": 11.6,
+   "weakAll": 25.9,
+   "weakKept": 19.7,
+   "weakCens": 32.6,
+   "reachable": 51.6,
+   "boundsAbovePct": 60
+  },
+  {
+   "era": "2000-2009",
+   "n": 9445,
+   "boundPct": 15.7,
+   "weakAll": 21.4,
+   "weakKept": 9,
+   "weakCens": 64.6,
+   "reachable": 57.5,
+   "boundsAbovePct": 42.3
+  },
+  {
+   "era": "2010-2017",
+   "n": 11409,
+   "boundPct": 12.8,
+   "weakAll": 18.8,
+   "weakKept": 9.3,
+   "weakCens": 57,
+   "reachable": 46.7,
+   "boundsAbovePct": 48.9
+  },
+  {
+   "era": "2018-2025",
+   "n": 8957,
+   "boundPct": 10.5,
+   "weakAll": 12,
+   "weakKept": 5.8,
+   "weakCens": 56.2,
+   "reachable": 32.8,
+   "boundsAbovePct": 32.6
+  }
+ ],
+ "decomposition": [
+  {
+   "pair": "ABL1-AKT1",
+   "pooled": 4.5,
+   "sharedPooled": -22,
+   "within": -19.7,
+   "selection": -26.5,
+   "weighting": 2.3,
+   "A_shared": {
+    "n": 83,
+    "weak": 47
+   },
+   "A_alone": {
+    "n": 1023,
+    "weak": 21.3
+   },
+   "B_shared": {
+    "n": 71,
+    "weak": 69
+   },
+   "B_alone": {
+    "n": 2272,
+    "weak": 17.2
+   }
+  },
+  {
+   "pair": "AKT1-VEGFR2",
+   "pooled": 3.6,
+   "sharedPooled": 24.8,
+   "within": 30.1,
+   "selection": 21.2,
+   "weighting": 5.4,
+   "A_shared": {
+    "n": 347,
+    "weak": 50.7
+   },
+   "A_alone": {
+    "n": 1996,
+    "weak": 13.2
+   },
+   "B_shared": {
+    "n": 505,
+    "weak": 25.9
+   },
+   "B_alone": {
+    "n": 9546,
+    "weak": 14.6
+   }
+  },
+  {
+   "pair": "ABL1-VEGFR2",
+   "pooled": 8.1,
+   "sharedPooled": 2.2,
+   "within": -1.7,
+   "selection": -5.8,
+   "weighting": -3.9,
+   "A_shared": {
+    "n": 434,
+    "weak": 26.7
+   },
+   "A_alone": {
+    "n": 672,
+    "weak": 21
+   },
+   "B_shared": {
+    "n": 604,
+    "weak": 24.5
+   },
+   "B_alone": {
+    "n": 9447,
+    "weak": 14.6
+   }
+  }
+ ],
+ "ceilingVsPotency": {
+  "sets": 486,
+  "spearman": -0.577,
+  "medianPotencyByCeiling": [
+   {
+    "ceiling": "<=10uM",
+    "sets": 280,
+    "medianSeriesPIC50": 6.7,
+    "medianBoundFrac": 0.16
+   },
+   {
+    "ceiling": ">10uM",
+    "sets": 206,
+    "medianSeriesPIC50": 5.69,
+    "medianBoundFrac": 0.15
+   }
+  ]
+ },
+ "boundBelowWeakestExact": {
+  "sets": 486,
+  "medianLogUnitsBelow10thPctExact": 0.59
+ },
+ "shiftByMinExact": [
+  {
+   "minExact": 3,
+   "n": 550,
+   "median": 0.34,
+   "q1": 0.16,
+   "q3": 0.61
+  },
+  {
+   "minExact": 5,
+   "n": 486,
+   "median": 0.3,
+   "q1": 0.15,
+   "q3": 0.53
+  },
+  {
+   "minExact": 10,
+   "n": 361,
+   "median": 0.24,
+   "q1": 0.12,
+   "q3": 0.45
+  },
+  {
+   "minExact": 20,
+   "n": 196,
+   "median": 0.18,
+   "q1": 0.09,
+   "q3": 0.36
+  }
+ ],
+ "targetBias": [
+  {
+   "target": "ABL1",
+   "pooledBias": 0.45,
+   "groupedShiftMedian": 0.39,
+   "nShift": 12,
+   "groupShare": 0.65
+  },
+  {
+   "target": "VEGFR2",
+   "pooledBias": 0.41,
+   "groupedShiftMedian": 0.37,
+   "nShift": 174,
+   "groupShare": 0.58
+  },
+  {
+   "target": "BACE1",
+   "pooledBias": 0.2,
+   "groupedShiftMedian": 0.3,
+   "nShift": 84,
+   "groupShare": 0.64
+  },
+  {
+   "target": "HDAC1",
+   "pooledBias": 0.27,
+   "groupedShiftMedian": 0.25,
+   "nShift": 151,
+   "groupShare": 0.59
+  },
+  {
+   "target": "AKT1",
+   "pooledBias": 0.42,
+   "groupedShiftMedian": 0.25,
+   "nShift": 24,
+   "groupShare": 0.55
+  },
+  {
+   "target": "Thrombin",
+   "pooledBias": 0.78,
+   "groupedShiftMedian": 0.25,
+   "nShift": 41,
+   "groupShare": 0.65
+  }
+ ],
+ "truncation": {
+  "sigmaW": 0.91,
+  "sets": 486,
+  "medianCensoredFrac": 0.154,
+  "predictedMedian": 0.255,
+  "observedMedian": 0.304,
+  "pearson": 0.918,
+  "bySeriesSize": [
+   {
+    "exact": "5-9",
+    "sets": 125,
+    "medianCensoredFrac": 0.286,
+    "observed": 0.47,
+    "predicted": 0.43
+   },
+   {
+    "exact": "10-19",
+    "sets": 165,
+    "medianCensoredFrac": 0.167,
+    "observed": 0.34,
+    "predicted": 0.27
+   },
+   {
+    "exact": "20-",
+    "sets": 196,
+    "medianCensoredFrac": 0.09,
+    "observed": 0.18,
+    "predicted": 0.16
+   }
+  ]
+ }
+}

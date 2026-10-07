@@ -2,7 +2,7 @@
 
 ## Automated
 
-`npm test` passes 20 of 20 tests (Node test runner, Node 20). The tests cover:
+`npm test` passes 23 of 23 tests (Node test runner, Node 20). The tests cover:
 
 - **Numerics:** normal-CDF accuracy at reference quantiles and in both tails (finite beyond z = −40), erfc reference values, and the golden-section and Nelder–Mead optimizers.
 - **Parsing:** quoted, semicolon-delimited ChEMBL exports with quoted relations; column mapping; relation and unit normalization; a readable error when required columns are missing.
@@ -33,3 +33,7 @@ Headless Chromium (Playwright), at 1360 × 900 in dark and light themes and at 3
 
 - A synthetic-recovery test first compared the fitted mean with the generating parameter. The fit matched the sample mean to 0.002 log units; the gap reflected sampling. The test now checks against the sample and, more loosely, against the generating parameters.
 - The per-paper shift distribution was first described as evidence because every shift was positive. A positive shift is guaranteed by the likelihood, so the interface and the contract now state that only the magnitude is informative.
+
+## Extended analyses (added after the first release)
+
+`tests/depth.test.js` adds three regression tests: the threshold gradient, the ABL1–AKT1 split into selection and weighting terms, and the correlation between the truncated-normal prediction and the fitted per-paper shifts (r > 0.9). The correlation is partly built in, because the formula approximates the same model. The test guards the implementation; it does not validate the model independently. Bootstrap intervals come from `analysis/depth.mjs` with a fixed seed.

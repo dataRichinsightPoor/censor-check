@@ -16,6 +16,10 @@ The bundled example covers 31,236 journal-literature IC50 records from ChEMBL fo
 - **A pooled comparison can reverse inside papers.** Pooled, ABL1 records are 4.5 points more often weak than AKT1 records. Inside the 50 papers that measured both, ABL1 records are 19.7 points less often weak.
 - **Counter-screens are censored more.** Counter-screen targets are bounds 29.6% of the time, against 13.3% for the target each series was optimized for. The filter removes selectivity evidence first.
 
+## Robustness analyses
+
+`node analysis/depth.mjs` reproduces the article's extended analyses: paper-resampled 95% intervals, threshold sensitivity (1 to 100 µM), era trends, the selection and weighting decomposition of pooled-versus-within comparisons, the association between each paper's bound position and its series potency, and the truncated-normal prediction of per-paper bias, \(\Delta(c)=\sigma_w\,\varphi(z_c)/(1-c)\). Results are written to `analysis/depth-results.json` and `analysis/per-paper-shifts.csv`.
+
 ## Open the model
 
 - **[Try Censor Check](https://datarichinsightpoor.github.io/censor-check/):** no installation or sign-in. Load the bundled subset or your own CSV or ChEMBL export. Files stay in your browser.
