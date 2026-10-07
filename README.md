@@ -13,7 +13,7 @@ The bundled example covers 31,236 journal-literature IC50 records from ChEMBL fo
 
 - **The weak tail is mostly censored.** In these records, 58.8% of the evidence for compounds weaker than 10 µM is a bound. The exact-value filter removes it, and the share of weak records falls from 17.8% to 8.4%. In 235 of 1,347 paper–target sets, the filter removes every compound the authors reported as weak.
 - **The paper explains more of the spread than the compound.** Under a grouped censored model, the between-paper SD of mean pIC50 is 1.13 and the within-paper SD is 0.91. Dropping bounds overstates a paper's mean potency by a median of 0.30 log units, with an interquartile range of 0.15 to 0.53.
-- **A pooled comparison can reverse inside papers.** Pooled, ABL1 records are 4.5 points more often weak than AKT1 records. Inside the 50 papers that measured both, ABL1 records are 19.7 points less often weak.
+- **A pooled comparison can lack a stable sign while the within-paper one is robust.** Pooled, ABL1 records are 4.5 points more often weak than AKT1 records (paper-resampled 95% interval −3 to +15). Inside the 50 papers that measured both, ABL1 records are 19.7 points less often weak (−32 to −9). Most of the gap comes from which papers measure both targets, not from reweighting within them.
 - **Counter-screens are censored more.** Counter-screen targets are bounds 29.6% of the time, against 13.3% for the target each series was optimized for. The filter removes selectivity evidence first.
 
 ## Robustness analyses
@@ -45,7 +45,7 @@ The bundled example covers 31,236 journal-literature IC50 records from ChEMBL fo
 - `web/model.js`: the engine. Pure functions, no dependencies.
 - `web/MATH.md` and `web/methods.html`: the mathematical contract. `tools-build-methods.py` builds the HTML from the Markdown.
 - `web/data/`: the bundled ChEMBL subset and its license and provenance note.
-- `tests/model.test.js`: 20 tests. They cover:
+- `tests/model.test.js` (20 tests) and `tests/depth.test.js` (3 tests). They cover:
   - normal-CDF accuracy in both tails and the optimizers;
   - parsing of ChEMBL exports, and relation and unit normalization;
   - filter accounting;
@@ -54,7 +54,8 @@ The bundled example covers 31,236 journal-literature IC50 records from ChEMBL fo
   - a constructed Simpson reversal, and the single-paper identity;
   - counter-screen roles and the disguised-ceiling test;
   - compound collapse, CSV labeling and version consistency;
-  - a regression test that reproduces every number published in the companion article from the bundled data.
+  - a regression test that reproduces every primary number published in the companion article from the bundled data;
+  - the threshold gradient, the selection and weighting decomposition, and the truncated-normal prediction of per-paper bias.
 
 Run the tests with Node 20 or later:
 

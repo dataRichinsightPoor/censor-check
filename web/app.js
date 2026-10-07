@@ -121,7 +121,7 @@ function compare() {
   const c = M.compareStrata(set, A, B, { T: result.threshold, use: $('cmpUse').value });
   drawCompare(c);
   $('cmp-note').textContent = c.sharedGroups
-    ? `${A} minus ${B}, weak share in percentage points. ${int(c.sharedGroups)} papers measured both (${int(c.nSharedA)} and ${int(c.nSharedB)} records). ${c.reversed ? 'The within-paper difference reverses the pooled sign.' : 'Same sign pooled and within papers; the magnitude may still differ.'} Mean pIC50 of exact values: pooled ${f2(c.pooledPDiff)}, within-paper median ${f2(c.withinPMedian)} across ${int(c.withinPGroups)} papers.`
+    ? `${A} minus ${B}, weak share in percentage points. ${int(c.sharedGroups)} papers measured both (${int(c.nSharedA)} and ${int(c.nSharedB)} records). ${c.reversed ? 'The within-paper difference has the opposite sign. A pooled sign can be fragile; resample papers (analysis/depth.mjs) before reading it as a reversal.' : 'Same sign pooled and within papers; the magnitude may still differ.'} Mean pIC50 of exact values: pooled ${f2(c.pooledPDiff)}, within-paper median ${f2(c.withinPMedian)} across ${int(c.withinPGroups)} papers.`
     : `No paper measured both ${A} and ${B}. The pooled difference (${f1(c.pooledWeakDiff)} points) cannot be checked within papers.`;
 }
 
