@@ -3,6 +3,7 @@ message: "If you use this software, cite its version and state the threshold, gr
 title: "Censor Check"
 type: software
 version: 0.1.0-alpha
+date-released: "2026-10-07"
 license: MIT
 repository-code: "https://github.com/dataRichinsightPoor/censor-check"
 url: "https://datarichinsightpoor.github.io/censor-check/"
