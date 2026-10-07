@@ -1,0 +1,12 @@
+{
+  "title": "Censor Check: a research-use audit of censored potency data",
+  "upload_type": "software",
+  "creators": [{"name": "Data-Rich, Insight-Poor"}],
+  "description": "<p>Censor Check reports what an exact-value (pChEMBL-style) filter removes from an IC50 table, estimates the resulting potency bias with pooled and grouped censored-normal likelihoods, separates record-weighted, paper-weighted and threshold-reachable summaries, compares strata pooled and within papers with Mantel–Haenszel weighting, checks counter-screen censoring and disguised ceilings, and reproduces the numbers of its companion article, The Audit, No. 1, \"Where the Inactives Went,\" from a bundled ChEMBL subset (CC BY-SA 3.0).</p><p>Research-use alpha. Estimates describe datasets, not compound potencies. Numerical verification is not biological validation.</p><p>Live tool: https://datarichinsightpoor.github.io/censor-check/ · Methods: https://datarichinsightpoor.github.io/censor-check/methods.html</p>",
+  "license": "MIT",
+  "keywords": ["censored data", "IC50", "ChEMBL", "pChEMBL", "Tobit model", "Mantel-Haenszel", "Simpson's paradox", "medicinal chemistry", "data curation"],
+  "related_identifiers": [
+    {"identifier": "https://datarichinsightpoor.github.io/censor-check/", "relation": "isDocumentedBy", "scheme": "url"},
+    {"identifier": "10.1093/nar/gkad1004", "relation": "references", "scheme": "doi"}
+  ]
+}
